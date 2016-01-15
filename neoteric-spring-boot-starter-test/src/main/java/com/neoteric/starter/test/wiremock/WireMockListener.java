@@ -32,9 +32,8 @@ public class WireMockListener extends AbstractTestExecutionListener {
         ConfigurableEnvironment environment = (ConfigurableEnvironment) testContext.getApplicationContext().getEnvironment();
 
         List<String> serviceMocks = Lists.newArrayList();
-        Arrays.stream(annotation.value()).forEach(service -> {
-            serviceMocks.add(String.join("", service, ".ribbon.listOfServers=localhost:", String.valueOf(port)));
-        });
+        Arrays.stream(annotation.value()).forEach(service ->
+                serviceMocks.add(String.join("", service, ".ribbon.listOfServers=localhost:", String.valueOf(port))));
 
         TestPropertySourceUtils.addInlinedPropertiesToEnvironment(environment, serviceMocks.stream().toArray(String[]::new));
         server = new WireMockServer(port);

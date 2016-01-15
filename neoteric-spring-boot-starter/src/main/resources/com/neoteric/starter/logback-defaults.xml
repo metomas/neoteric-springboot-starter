@@ -49,7 +49,10 @@ Defaults for Neoteric application
     <logger name="org.hibernate.validator" level="INFO"/>
     <logger name="org.jboss" level="INFO"/>
     <logger name="org.apache.sshd" level="INFO"/>
+    <logger name="org.apache.http" level="INFO"/>
+
     <logger name="com.netflix.servo" level="INFO"/>
+    <logger name="com.netflix.discovery" level="INFO"/>
 
     <logger name="com.netflix.hystrix.strategy" level="INFO"/>
     <logger name="com.netflix.loadbalancer" level="INFO"/>
