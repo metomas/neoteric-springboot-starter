@@ -1,5 +1,6 @@
 package pl.poznachowski.springboot;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,9 +29,17 @@ public class SampleEndpoint {
     @GET
     public Response get() {
         LOG.error("ERROR");
-
-        TestJSON json = externalServiceAPI.get();
+        TestJSON json = callExternalApi();
         LOG.info("RETURNED FROM OTHER SERVICE: {}", json);
         return Response.ok(json).build();
+    }
+
+    @HystrixCommand(fallbackMethod = "defaultGet")
+    private TestJSON callExternalApi() {
+        return externalServiceAPI.get();
+    }
+
+    private TestJSON defaultGet() {
+        return new TestJSON("fallback", "fallback");
     }
 }

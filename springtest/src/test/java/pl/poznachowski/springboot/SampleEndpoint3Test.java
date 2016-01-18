@@ -22,6 +22,7 @@ import static com.jayway.restassured.RestAssured.when;
 @ContainerIntegrationTest
 @EmbeddedMongoTest(dropCollections = "Person")
 @ActiveProfiles(AuthorizationProfile.NAME)
+
 public class SampleEndpoint3Test {
 
     @Autowired
