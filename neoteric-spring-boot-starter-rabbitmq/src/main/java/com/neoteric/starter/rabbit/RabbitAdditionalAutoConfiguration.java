@@ -57,6 +57,7 @@ public class RabbitAdditionalAutoConfiguration {
     public Jackson2JsonMessageConverter jacksonMessageConverter(ObjectMapper objectMapper) {
         Jackson2JsonMessageConverter jacksonMessageConverter = new Jackson2JsonMessageConverter();
         jacksonMessageConverter.setJsonObjectMapper(objectMapper);
+        return jacksonMessageConverter;
     }
 
     @Bean
@@ -65,14 +66,14 @@ public class RabbitAdditionalAutoConfiguration {
         messageConverter.addDelgate(MessageProperties.CONTENT_TYPE_JSON, jacksonMessageConverter);
         return messageConverter;
     }
-
+/*
     @PostConstruct
     public void setAdviceChain(MessageConverter messageConverter) {
         // the order of Advice chain is important to retain requestId in LogOnRetryListener
         rabbitListenerContainerFactory.setAdviceChain(tracingOnListener(), retryOperations());
         rabbitListenerContainerFactory.setMessageConverter(messageConverter);
     }
-
+*/
     private Advice retryOperations() {
         return RetryInterceptorBuilder.stateless()
                 .retryOperations(defaultRetryTemplate())
@@ -134,7 +135,8 @@ public class RabbitAdditionalAutoConfiguration {
     }
 
     @Bean
-    public TracedRabbitTemplate tracedRabbitTemplate(ConnectionFactory cf, ContentTypeDelegatingMessageConverter messageConverter) {
+    public TracedRabbitTemplate
+    tracedRabbitTemplate(ConnectionFactory cf, ContentTypeDelegatingMessageConverter messageConverter) {
         return new TracedRabbitTemplate(cf, messageConverter);
     }
 

@@ -21,6 +21,8 @@ import static com.neoteric.starter.Constants.REQUEST_ID;
 public class TracedRabbitTemplate extends RabbitTemplate {
 
     private static final Logger LOG = LoggerFactory.getLogger(TracedRabbitTemplate.class);
+    private volatile String exchange = "";
+    private volatile String routingKey = "";
 
     private final static MessagePostProcessor SET_REQUEST_ID_TO_MESSAGE = message -> {
         LOG.debug("Setting Request ID for message: {}", MDC.get(REQUEST_ID));
